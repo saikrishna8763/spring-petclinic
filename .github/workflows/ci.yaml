@@ -1,1 +1,25 @@
+name: CI Pipeline
 
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  java-ci:
+    uses: saikrishna8763/ci-templates/.github/workflows/java-ci-template.yml@main
+    with:
+      java-version: "17"
+      build-tool: "gradle"
+      service-name: "my-java-service"
+      sonar-project-key: "my-java-service"
+      docker-image: "mydockerhubuser/my-java-service"
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
