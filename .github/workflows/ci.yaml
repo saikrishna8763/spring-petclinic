@@ -48,3 +48,9 @@ jobs:
             -Dsonar.host.url=$SONAR_HOST_URL \
             -Dsonar.login=$SONAR_TOKEN \
             --info
+      #--------------TO SEE jar----------------
+      - name: Upload Spring Boot JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-petclinic-jar
+          path: target/spring-petclinic-*.jar
