@@ -58,3 +58,22 @@ jobs:
         with:
           name: spring-petclinic-jar
           path: build/libs/*.jar
+
+      # -------- ACR LOGIN --------
+      - name: Login to Azure ACR
+        run: |
+          docker login ${{ secrets.ACR_LOGIN_SERVER }} \
+          -u ${{ secrets.ACR_USERNAME }} \
+          -p ${{ secrets.ACR_PASSWORD }}
+
+      # -------- DOCKER BUILD --------
+      - name: Build Docker image
+        run: |
+          docker build \
+          -t ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.IMAGE_NAME }}:latest .
+
+      # -------- DOCKER PUSH --------
+      - name: Push Docker image to ACR
+        run: |
+          docker push \
+          ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.IMAGE_NAME }}:latest
