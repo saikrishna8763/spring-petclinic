@@ -5,19 +5,15 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  actions: read
-
 jobs:
   java-ci:
     uses: saikrishna8763/ci-templates/.github/workflows/java-ci-template.yml@main
     with:
       java-version: "17"
-      build-tool: "gradle"
-      service-name: "java-gradle"
-      sonar-project-key: "java-gradle"
-      docker-image: "mydockerhubuser/my-java-service"
+      build-tool: "gradle"          # ✅ CORRECT
+      service-name: "spring-petclinic"
+      sonar-project-key: "spring-petclinic"
+      docker-image: "mydockerhubuser/spring-petclinic"
       project-path: "."
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
