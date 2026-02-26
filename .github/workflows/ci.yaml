@@ -18,6 +18,7 @@ jobs:
       service-name: "java-gradle"
       sonar-project-key: "java-gradle"
       docker-image: "mydockerhubuser/my-java-service"
+      project-path: "."
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
