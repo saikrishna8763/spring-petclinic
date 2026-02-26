@@ -15,8 +15,8 @@ jobs:
     with:
       java-version: "17"
       build-tool: "gradle"
-      service-name: "my-java-service"
-      sonar-project-key: "my-java-service"
+      service-name: "java-gradle"
+      sonar-project-key: "java-gradle"
       docker-image: "mydockerhubuser/my-java-service"
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
