@@ -1,4 +1,4 @@
-name: Build & SonarQube
+name: CI Pipeline
 
 on:
   push:
@@ -6,74 +6,14 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      # ---------------- CHECKOUT -----------------
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0   # REQUIRED for Sonar
-
-      # ---------------- JAVA SETUP ----------------
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      # ---------------- CACHE (SONAR + GRADLE) ----------------
-      - name: Cache Gradle & Sonar
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.sonar/cache
-          key: ${{ runner.os }}-gradle-sonar-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-
-      # ---------------- PERMISSIONS ----------------
-      - name: Grant execute permission for Gradle
-        run: chmod +x gradlew
-
-      # ---------------- BUILD + SONAR ----------------
-      - name: Build and Analyze with SonarQube
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: |
-          ./gradlew clean build sonar \
-            -Dsonar.projectKey=java-gradle \
-            -Dsonar.host.url=$SONAR_HOST_URL \
-            -Dsonar.login=$SONAR_TOKEN \
-            --info
-
-      #--------------TO SEE jar----------------
-      - name: Build application
-        run: ./gradlew clean build
-
-      - name: Upload Spring Boot JAR
-        uses: actions/upload-artifact@v4
-        with:
-          name: spring-petclinic-jar
-          path: build/libs/*.jar
-
-      # -------- ACR LOGIN --------
-      - name: Login to Azure ACR
-        run: |
-          docker login ${{ secrets.ACR_LOGIN_SERVER }} \
-          -u ${{ secrets.ACR_USERNAME }} \
-          -p ${{ secrets.ACR_PASSWORD }}
-
-      # -------- DOCKER BUILD --------
-      - name: Build Docker image
-        run: |
-          docker build \
-          -t ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.IMAGE_NAME }}:latest .
-
-      # -------- DOCKER PUSH --------
-      - name: Push Docker image to ACR
-        run: |
-          docker push \
-          ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.IMAGE_NAME }}:latest
+  ci:
+    uses: saikrishna8763/ci-templates/.github/workflows/java-gradle-sonar-acr.yml@main
+    with:
+      sonar_project_key: java-gradle
+      image_name: spring-petclinic
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
