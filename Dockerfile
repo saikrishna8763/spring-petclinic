@@ -1,14 +1,15 @@
-# Lightweight Java runtime image
+# ---------- Stage 1: Build ----------
+FROM gradle:8.5-jdk17-alpine AS builder
+
+WORKDIR /app
+COPY . .
+RUN gradle clean build -x test
+
+# ---------- Stage 2: Runtime ----------
 FROM eclipse-temurin:17-jre-alpine
 
-# Set working directory
 WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Copy the JAR built by Gradle
-COPY build/libs/*.jar app.jar
-
-# Expose Spring Boot port
 EXPOSE 8080
-
-# Run the application
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
