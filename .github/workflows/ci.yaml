@@ -1,3 +1,56 @@
+name: Spring Petclinic CI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    uses: saikrishna8763/github-templates/.github/workflows/build.yaml@main
+    with:
+      java-version: '17'
+      build-tool: 'maven'
+      service-name: 'petclinic'
+      project-path: '.'
+
+  test:
+    needs: build
+    uses: saikrishna8763/github-templates/.github/workflows/test.yaml@main
+    with:
+      java-version: '17'
+      build-tool: 'maven'
+      project-path: '.'
+
+  scan:
+    needs: test
+    uses: saikrishna8763/github-templates/.github/workflows/scan.yaml@main
+    with:
+      sonar-project-key: 'java-gradle'
+      project-path: '.'
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  docker:
+    needs: scan
+    uses: saikrishna8763/github-templates/.github/workflows/docker.yaml@main
+    with:
+      docker-image: 'spring-petclinic'
+      project-path: '.'
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+
+
+
+
+
+
+
 #name: Spring Petclinic CI
 
 #on:
