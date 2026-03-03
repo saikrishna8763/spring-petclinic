@@ -1,0 +1,26 @@
+name: Docker
+
+on:
+  workflow_run:
+    workflows: ["Sonar"]
+    types:
+      - completed
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login
+        run: |
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login \
+            ${{ secrets.ACR_LOGIN_SERVER }} \
+            -u ${{ secrets.ACR_USERNAME }} \
+            --password-stdin
+
+      - name: Build Image
+        run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/spring-petclinic:${{ github.sha }} .
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/spring-petclinic:${{ github.sha }}
