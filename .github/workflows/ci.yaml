@@ -70,7 +70,7 @@ jobs:
 
       #run-build: true
       #run-test: false
-      #run-coverage: false
+      #run-coverage: false 
       #run-sonar: false
       #run-fs-scan: false
       #run-docker: false
