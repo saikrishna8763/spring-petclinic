@@ -40,10 +40,9 @@ jobs:
     needs: sonar
     uses: saikrishna8763/github-templates/.github/workflows/docker.yaml@main
     with:
-      docker-image: 'spring-petclinic'
+      image-name: spring-petclinic
       project-path: '.'
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      
-      
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
