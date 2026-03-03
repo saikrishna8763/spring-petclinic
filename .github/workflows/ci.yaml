@@ -12,7 +12,7 @@ jobs:
     uses: saikrishna8763/github-templates/.github/workflows/build.yaml@main
     with:
       java-version: '17'
-      build-tool: 'maven'
+      build-tool: 'gradle'
       service-name: 'petclinic'
       project-path: '.'
 
@@ -21,7 +21,7 @@ jobs:
     uses: saikrishna8763/github-templates/.github/workflows/test.yaml@main
     with:
       java-version: '17'
-      build-tool: 'maven'
+      build-tool: 'gradle'
       project-path: '.'
 
   sonar:
@@ -29,7 +29,7 @@ jobs:
     uses: saikrishna8763/github-templates/.github/workflows/sonar.yaml@main
     with:
       java-version: '17'
-      build-tool: 'maven'
+      build-tool: 'gradle'
       sonar-project-key: 'java-gradle'
       project-path: '.'
     secrets:
@@ -45,75 +45,3 @@ jobs:
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-
-
-
-
-#name: Spring Petclinic CI
-
-#on:
-  #push:
-    #branches:
-      #- main
-
-  # Optional: manual trigger
-  #workflow_dispatch:
-
-#jobs:
-  #ci:
-    #uses: saikrishna8763/github-templates/.github/workflows/java-ci-template.yml@main
-    #with:
-      #java-version: '17'
-      #build-tool: 'maven'
-      #service-name: 'petclinic'
-      #sonar-project-key: 'java-gradle'
-      #docker-image: 'spring-petclinic'
-
-      #run-build: true
-      #run-test: false
-      #run-coverage: false 
-      #run-sonar: false
-      #run-fs-scan: false
-      #run-docker: false
-      #run-image-scan: false
-      #run-push: false
-
-    #secrets:
-      #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      #DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      #DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
- 
-
-
-
-
-
-
-
-#name: Spring Petclinic CI
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   ci:
-#     uses: saikrishna8763/github-templates/.github/workflows/ci.yaml@main
-#     with:
-#       java-version: '17'
-#       image-name: 'spring-petclinic'
-#       sonar-project-key: 'java-gradle'
-#     secrets:
-#       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-#       ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
-#       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-#       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-
-
- 
- 
-
-      
