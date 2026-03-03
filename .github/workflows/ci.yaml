@@ -24,7 +24,7 @@ jobs:
       build-tool: 'maven'
       project-path: '.'
 
-  scan:
+  sonar:
     needs: test
     uses: saikrishna8763/github-templates/.github/workflows/sonar.yaml@main
     with:
@@ -35,7 +35,7 @@ jobs:
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   docker:
-    needs: scan
+    needs: sonar
     uses: saikrishna8763/github-templates/.github/workflows/docker.yaml@main
     with:
       docker-image: 'spring-petclinic'
