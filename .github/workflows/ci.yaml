@@ -28,6 +28,8 @@ jobs:
     needs: test
     uses: saikrishna8763/github-templates/.github/workflows/sonar.yaml@main
     with:
+      java-version: '17'
+      build-tool: 'maven'
       sonar-project-key: 'java-gradle'
       project-path: '.'
     secrets:
