@@ -1,23 +1,23 @@
-name: Spring Petclinic CI
+#name: Spring Petclinic CI
+# on:
+#   push:
+#     branches:
+#       - main
 
-on:
-  push:
-    branches:
-      - main
+# jobs:
+#   ci:
+#     uses: saikrishna8763/github-templates/.github/workflows/ci.yaml@main
+#     with:
+#       java-version: '17'
+#       image-name: 'spring-petclinic'
+#       sonar-project-key: 'java-gradle'
+#     secrets:
+#       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#       ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+#       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+#       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 
-jobs:
-  ci:
-    uses: saikrishna8763/github-templates/.github/workflows/ci.yaml@main
-    with:
-      java-version: '17'
-      image-name: 'spring-petclinic'
-      sonar-project-key: 'java-gradle'
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
-      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 
 
       
