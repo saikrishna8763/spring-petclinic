@@ -10,7 +10,7 @@ on:
 
 jobs:
   ci:
-    uses: saikrishna8763/github-templates/.github/workflows/ci.yaml@main
+    uses: saikrishna8763/github-templates/.github/workflows/java-ci-template.yml@main
     with:
       java-version: '17'
       build-tool: 'maven'
